@@ -1,0 +1,232 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Nexo Digital</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+</head>
+<body>
+    <div class="top-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <a href="{% url 'web:index' %}" class="btn btn-sm btn-outline-dark">Ver sitio</a>
+            <div><h5><i class="bi bi-at me-2"></i> Nexo Digital</h5></div>
+        </div>
+        <div class="user-info">
+            <span style="font-size: 12px; color: #666;">{{ request.user.username }}</span>
+            <small style="color: #777;">Administrador</small>
+            <div class="avatar"><i class="bi bi-person" style="color: #666;"></i></div>
+        </div>
+    </div>
+
+    <div class="main-content" id="dashboard">
+        {% if messages %}
+            <div class="p-3">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="dashboard-header">
+            <div>
+                <h3 class="fw-bold mb-1">Panel de administración</h3>
+                <p class="text-muted mb-0">Gestión interna de catálogo, inventario, usuarios y mensajes.</p>
+            </div>
+            <a href="{% url 'web:admin_producto_crear' %}" class="btn btn-dark">
+                <i class="bi bi-plus-circle me-1"></i> Agregar producto
+            </a>
+        </div>
+
+        <div class="kpi-container">
+            <div class="kpi-card dark">
+                <div class="kpi-icon"><i class="bi bi-box-seam"></i></div>
+                <div class="kpi-label">Productos</div>
+                <div class="kpi-value">{{ total_productos }}</div>
+                <small style="color: #aaa;">Registrados en la base de datos</small>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon"><i class="bi bi-clipboard-data"></i></div>
+                <div class="kpi-label">Stock total</div>
+                <div class="kpi-value">{{ total_stock }}</div>
+                <small class="text-muted">Unidades disponibles</small>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon"><i class="bi bi-people"></i></div>
+                <div class="kpi-label">Usuarios</div>
+                <div class="kpi-value">{{ total_usuarios }}</div>
+                <small class="text-muted">Cuentas registradas</small>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon"><i class="bi bi-envelope"></i></div>
+                <div class="kpi-label">Mensajes</div>
+                <div class="kpi-value">{{ total_mensajes }}</div>
+                <small class="text-muted">{{ total_mensajes_no_leidos }} sin leer</small>
+            </div>
+        </div>
+
+        <div class="px-4 pb-2">
+            <ul class="nav nav-pills gap-2" id="adminTabs" role="tablist">
+                <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab-productos" type="button">Productos</button></li>
+                <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-inventario" type="button">Inventario</button></li>
+                <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-usuarios" type="button">Usuarios</button></li>
+                <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-mensajes" type="button">Mensajes</button></li>
+            </ul>
+        </div>
+
+        <div class="tab-content px-4 pb-4">
+            <div class="tab-pane fade show active" id="tab-productos" role="tabpanel">
+                <div class="content-card" id="productos">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h5 class="fw-bold mb-1">Gestión de productos</h5>
+                            <p class="text-muted mb-0 small">Los productos creados aquí aparecen automáticamente en el catálogo del usuario.</p>
+                        </div>
+                        <a href="{% url 'web:admin_producto_crear' %}" class="btn btn-dark btn-sm">Agregar producto</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead>
+                                <tr><th>Producto</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Destacado</th><th>Estado</th><th>Acciones</th></tr>
+                            </thead>
+                            <tbody>
+                                {% for producto in productos %}
+                                <tr>
+                                    <td class="fw-semibold">{{ producto.nombre }}</td>
+                                    <td>{{ producto.categoria }}</td>
+                                    <td>${{ producto.precio|floatformat:0 }}</td>
+                                    <td>{{ producto.stock }}</td>
+                                    <td>{% if producto.destacado %}<span class="badge bg-primary">Sí</span>{% else %}<span class="badge bg-secondary">No</span>{% endif %}</td>
+                                    <td>
+                                        {% if producto.stock > 5 %}<span class="badge bg-success">Disponible</span>
+                                        {% elif producto.stock > 0 %}<span class="badge bg-warning text-dark">Stock bajo</span>
+                                        {% else %}<span class="badge bg-danger">Sin stock</span>{% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'web:detalle_producto' producto.id %}" class="btn btn-sm btn-outline-primary">Ver</a>
+                                        <a href="{% url 'web:admin_producto_editar' producto.id %}" class="btn btn-sm btn-outline-dark">Editar</a>
+                                        <a href="{% url 'web:admin_producto_eliminar' producto.id %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="7" class="text-center text-muted py-4">No hay productos registrados.</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="tab-inventario" role="tabpanel">
+                <div class="content-card" id="inventario">
+                    <h5 class="fw-bold mb-3">Inventario y stock</h5>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4"><div class="border rounded p-3 bg-light"><small class="text-muted">Categorías</small><h4 class="mb-0">{{ categorias }}</h4></div></div>
+                        <div class="col-md-4"><div class="border rounded p-3 bg-light"><small class="text-muted">Sin stock</small><h4 class="mb-0">{{ productos_sin_stock }}</h4></div></div>
+                        <div class="col-md-4"><div class="border rounded p-3 bg-light"><small class="text-muted">Stock total</small><h4 class="mb-0">{{ total_stock }}</h4></div></div>
+                    </div>
+                    <h6 class="fw-bold">Productos con stock bajo</h6>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead><tr><th>Producto</th><th>Categoría</th><th>Stock</th><th>Acción</th></tr></thead>
+                            <tbody>
+                                {% for producto in productos_bajo_stock %}
+                                <tr>
+                                    <td>{{ producto.nombre }}</td><td>{{ producto.categoria }}</td><td>{{ producto.stock }}</td>
+                                    <td><a href="{% url 'web:admin_producto_editar' producto.id %}" class="btn btn-sm btn-outline-dark">Actualizar stock</a></td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="4" class="text-muted text-center py-4">No hay productos con stock bajo.</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="tab-usuarios" role="tabpanel">
+                <div class="content-card" id="usuarios">
+                    <h5 class="fw-bold mb-3">Gestión de usuarios</h5>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead><tr><th>Usuario</th><th>Email</th><th>Fecha registro</th><th>Rol</th><th>Tipo</th><th>Acciones</th></tr></thead>
+                            <tbody>
+                                {% for usuario in usuarios %}
+                                <tr>
+                                    <td class="fw-semibold">{{ usuario.username }}</td>
+                                    <td>{{ usuario.email|default:"Sin correo" }}</td>
+                                    <td>{{ usuario.date_joined|date:"d/m/Y" }}</td>
+                                    <td>
+                                        <form method="post" action="{% url 'web:admin_usuario_cambiar_rol' usuario.id %}" class="d-flex gap-2 align-items-center">
+                                            {% csrf_token %}
+                                            <select name="role" class="form-select form-select-sm" style="min-width: 150px;">
+                                                {% for value, label in roles %}
+                                                    <option value="{{ value }}" {% if usuario.profile.role == value %}selected{% endif %}>{{ label }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <button type="submit" class="btn btn-sm btn-outline-dark">Guardar</button>
+                                        </form>
+                                    </td>
+                                    <td>{% if usuario.is_staff %}<span class="badge bg-dark">Staff</span>{% else %}<span class="badge bg-secondary">Cliente</span>{% endif %}</td>
+                                    <td>
+                                        {% if usuario.id != request.user.id %}
+                                        <form method="post" action="{% url 'web:admin_usuario_eliminar' usuario.id %}" onsubmit="return confirm('¿Eliminar este usuario? Esta acción no se puede deshacer.')">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+                                        </form>
+                                        {% else %}
+                                            <span class="text-muted small">Usuario actual</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="7" class="text-center text-muted py-4">No hay usuarios registrados.</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="tab-mensajes" role="tabpanel">
+                <div class="content-card" id="mensajes">
+                    <h5 class="fw-bold mb-3">Mensajes de contacto</h5>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead><tr><th>Estado</th><th>Nombre</th><th>Correo</th><th>Empresa</th><th>Mensaje</th><th>Fecha</th><th>Acciones</th></tr></thead>
+                            <tbody>
+                                {% for mensaje in mensajes %}
+                                <tr>
+                                    <td>{% if mensaje.read %}<span class="badge bg-secondary">Leído</span>{% else %}<span class="badge bg-primary">Nuevo</span>{% endif %}</td>
+                                    <td>{{ mensaje.full_name }}</td>
+                                    <td>{{ mensaje.email }}</td>
+                                    <td>{{ mensaje.company|default:"-" }}</td>
+                                    <td style="max-width: 300px;">{{ mensaje.message|truncatechars:80 }}</td>
+                                    <td>{{ mensaje.created_at|date:"d/m/Y H:i" }}</td>
+                                    <td class="d-flex gap-1">
+                                        {% if not mensaje.read %}
+                                        <form method="post" action="{% url 'web:admin_mensaje_marcar_leido' mensaje.id %}">{% csrf_token %}<button class="btn btn-sm btn-outline-success" type="submit">Leído</button></form>
+                                        {% endif %}
+                                        <form method="post" action="{% url 'web:admin_mensaje_eliminar' mensaje.id %}" onsubmit="return confirm('¿Eliminar este mensaje?')">{% csrf_token %}<button class="btn btn-sm btn-outline-danger" type="submit">Eliminar</button></form>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="7" class="text-center text-muted py-4">No hay mensajes de contacto.</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

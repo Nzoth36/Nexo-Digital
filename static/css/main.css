@@ -1,0 +1,134 @@
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.hero-minimal {
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+}
+
+.btn-custom-blue {
+    background-color: #0d5dd6;
+    color: white;
+    font-weight: 700;
+    border: 1px solid #0b4ab0;
+    border-radius: 4px;
+    padding: 10px 24px;
+}
+
+.btn-custom-blue:hover {
+    background-color: #0b4ab0;
+    color: white;
+}
+
+.scrolling-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 1.5rem;
+    padding-bottom: 1rem;
+    scroll-behavior: smooth;
+}
+
+.scrolling-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.product-card-simple {
+    flex: 0 0 auto;
+    width: 260px;
+    border: none;
+    background: transparent;
+}
+
+.product-card-simple .img-bg {
+    background-color: #f4f5f7;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+.product-card-simple img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+}
+
+.badge-new {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #4a4a4a;
+    color: white;
+    font-size: 0.75rem;
+    padding: 3px 8px;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+.scroll-btn-right {
+    position: absolute;
+    right: -20px;
+    top: 40%;
+    transform: translateY(-50%);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: #3b3b3b;
+    color: white;
+    border: none;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: background 0.2s;
+}
+
+.scroll-btn-right:hover {
+    background-color: #1a1a1a;
+}
+
+@media (max-width: 768px) {
+    .scroll-btn-right {
+        display: none;
+    }
+}
+
+.product-card {
+    transition: transform 0.2s ease-in-out;
+    border: 1px solid #eee;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+.product-img-container {
+    height: 220px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+}
+
+.product-img-container img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    padding: 1rem;
+}

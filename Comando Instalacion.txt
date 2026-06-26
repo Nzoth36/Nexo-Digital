@@ -1,0 +1,25 @@
+INSTALACION DEL PROYECTO
+
+1.- py -m venv .venv
+2.- .\.venv\Scripts\Activate.ps1
+3.- python -m pip install --upgrade pip
+4.- python -m pip install -r requirements.txt
+5.- python manage.py migrate
+6.- python manage.py runserver
+
+SITIO:
+http://127.0.0.1:8000/
+
+PANEL ADMIN:
+http://127.0.0.1:8000/panel-admin/
+
+CREDENCIALES ADMINISTRADOR:
+Correo: Admin@gmail.com
+Contraseña: 1029384756
+
+CREDENCIALES CLIENTE:
+Correo: Cliente@gmail.com
+Contraseña: 12345678
+NOTA:
+Si se inicia sesión con un administrador, el sistema redirige directamente al panel-admin.
+Si se inicia sesión con un usuario normal, el sistema redirige al inicio.

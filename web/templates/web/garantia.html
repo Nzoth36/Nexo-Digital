@@ -1,0 +1,113 @@
+{% extends "web/base.html" %}
+
+{% load static %}
+
+{% block title %}Devoluciones y Garantía - Nexo Digital{% endblock %}
+
+{% block content %}
+    <main class="container py-5">
+        <div class="p-5 mb-4 bg-light rounded-3 border">
+            <h1 class="fw-bold text-dark mb-2">Devoluciones y Garantía</h1>
+            <p class="mb-0 text-muted">Políticas claras para compras seguras en Nexo Digital</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm p-4 h-100">
+                    <h3 class="fw-bold text-dark mb-3 d-flex align-items-center">
+                        <i class="bi bi-arrow-clockwise text-primary me-2"></i>
+                        Devoluciones
+                    </h3>
+                    <p>En Nexo Digital aceptamos devoluciones bajo las siguientes condiciones:</p>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-borderless">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Plazo máximo:</strong></td>
+                                    <td><span class="badge bg-info">10 días hábiles</span> desde la recepción</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Condición:</strong></td>
+                                    <td>Producto sin uso y en empaque original</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Documentación:</strong></td>
+                                    <td>Debe incluir boleta o comprobante de compra</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Envío retorno:</strong></td>
+                                    <td>Cliente asume costo (excepto por falla de fábrica)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="alert alert-warning mt-3 mb-0">
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+                        No se aceptan devoluciones de productos usados o dañados por mal uso.
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm p-4 h-100">
+                    <h3 class="fw-bold text-dark mb-3 d-flex align-items-center">
+                        <i class="bi bi-shield-check text-primary me-2"></i>
+                        Garantía
+                    </h3>
+                    <p>Todos nuestros productos cuentan con garantía según su categoría:</p>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-borderless">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Equipos de red:</strong></td>
+                                    <td><span class="badge bg-success">12 meses</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Accesorios:</strong></td>
+                                    <td><span class="badge bg-info">6 meses</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Equipos industriales:</strong></td>
+                                    <td><span class="badge bg-success">12 a 24 meses</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="alert alert-info mt-3 mb-0">
+                        <i class="bi bi-info-circle me-2"></i>
+                        La garantía cubre fallas de fábrica, no daños por uso indebido o instalación incorrecta.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-5">
+            <div class="card border-0 shadow-sm p-4">
+                <h3 class="fw-bold text-dark mb-3 d-flex align-items-center">
+                    <i class="bi bi-telephone text-primary me-2"></i>
+                    Contacto para Garantía y Devoluciones
+                </h3>
+                <p class="mb-3">Para iniciar un proceso de devolución o consultar sobre garantía, contáctanos por cualquiera de estos medios:</p>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="d-flex">
+                            <i class="bi bi-telephone text-primary me-3 mt-1"></i>
+                            <div>
+                                <strong>Teléfono</strong><br>
+                                800 123 3211<br>
+                                <small class="text-muted">Lun-Vie: 9:00 - 18:00</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex">
+                            <i class="bi bi-envelope text-primary me-3 mt-1"></i>
+                            <div>
+                                <strong>Email</strong><br>
+                                soporte@nexodigital.com<br>
+                                <small class="text-muted">Respuesta en 24 hrs</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

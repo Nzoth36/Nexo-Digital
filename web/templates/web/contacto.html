@@ -1,0 +1,71 @@
+{% extends "web/base.html" %}
+
+{% block title %}Contacto - Nexo Digital{% endblock %}
+
+{% block content %}
+<main class="container py-5">
+    <section id="contacto" class="bg-light py-5 mt-5 border-top rounded-3 shadow-sm">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center mb-5">
+                    <h2 class="fw-bold">Envíanos un mensaje</h2>
+                    <p class="text">¿Necesitas una cotización por volumen para tu proyecto de red? Escríbenos.</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="bg-white p-4 p-md-5 rounded-3 shadow-sm border">
+                        <form id="contactForm">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Nombre Completo *</label>
+                                    <input type="text" class="form-control focus-ring focus-ring-light bg-light border-0 py-2" placeholder="Ej. Juan Pérez" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Empresa (Opcional)</label>
+                                    <input type="text" class="form-control focus-ring focus-ring-light bg-light border-0 py-2" placeholder="Nombre de tu compañía">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold">Correo Electrónico *</label>
+                                    <input type="email" class="form-control focus-ring focus-ring-light bg-light border-0 py-2" placeholder="tu@correo.com" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold">Mensaje o Solicitud *</label>
+                                    <textarea class="form-control focus-ring focus-ring-light bg-light border-0 py-2" rows="4" placeholder="Describe los equipos que necesitas..." required></textarea>
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <button type="button" class="btn btn-primary btn-lg w-100 fw-bold">Enviar Mensaje</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-4 mt-5">
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-sm p-4 mb-4">
+                        <h3 class="fw-bold text-dark mb-3 d-flex align-items-center">
+                            <i class="bi bi-envelope text-primary me-2"></i>
+                            Correo Electrónico
+                        </h3>
+                        <p class="mb-2">Puedes escribirnos a nuestro correo de atención al cliente para consultas generales, cotizaciones o soporte técnico.</p>
+                        <div class="alert alert-info mt-3 mb-0">
+                            <strong>Correo de contacto:</strong> <a href="mailto:contacto@nexodigital.com">contacto@nexodigital.com</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-sm p-4 mb-4">
+                        <h3 class="fw-bold text-dark mb-3 d-flex align-items-center">
+                            <i class="bi bi-geo-alt text-primary me-2"></i>
+                            Ubicación
+                        </h3>
+                        <p class="mb-2">Visítanos en nuestras oficinas principales para coordinar tu pedido y conocer nuestras soluciones de infraestructura.</p>
+                        <p class="mb-0">Avenida Tusca, Capital</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

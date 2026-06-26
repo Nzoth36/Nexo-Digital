@@ -1,0 +1,42 @@
+/* Styles for payment page */
+
+body {
+    background: #6c757d;
+}
+
+.payment-card,
+.summary-card {
+    border: none;
+    border-radius: 18px;
+}
+
+.summary-card {
+    position: sticky;
+    top: 20px;
+}
+
+.form-control {
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.payment-method {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.payment-method:hover {
+    border-color: #0d6efd;
+    background-color: #f8fbff;
+}
+
+.payment-method input[type="radio"] {
+    cursor: pointer;
+}
+
+.payment-method i {
+    margin-left: 8px;
+}

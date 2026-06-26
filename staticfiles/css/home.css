@@ -1,0 +1,9 @@
+.hero-video-container {
+    height: 500px; /* Define la altura que prefieras */
+    display: flex;
+    align-items: center;
+}
+
+.hero-video {
+    object-fit: cover;
+}

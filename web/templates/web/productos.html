@@ -1,0 +1,89 @@
+{% extends "web/base.html" %}
+{% load static %}
+
+{% block title %}Productos - Nexo Digital{% endblock %}
+
+{% block content %}
+<main class="container py-5">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-4">
+        <div>
+            <h1 class="fw-bold mb-2">Productos</h1>
+            <p class="text-muted mb-0">Catálogo actualizado desde el panel de administración.</p>
+        </div>
+        <div class="text-muted small">
+            {{ productos|length }} producto(s) disponibles
+        </div>
+    </div>
+
+    <div class="mb-4 d-flex flex-wrap gap-2">
+        <button class="btn btn-dark btn-sm" onclick="filterProducts('all')">Todos</button>
+        {% for categoria in categorias %}
+            <button class="btn btn-outline-dark btn-sm" onclick="filterProducts('{{ categoria|escapejs }}')">{{ categoria }}</button>
+        {% endfor %}
+    </div>
+
+    <div class="row g-4" id="products-grid">
+        {% for producto in productos %}
+        <div id="prod{{ producto.id }}" class="col-sm-6 col-md-4 col-lg-3 product-item" data-category="{{ producto.categoria }}">
+            <div class="card h-100 product-card shadow-sm border-0 rounded-3 position-relative">
+                <a href="{% url 'web:detalle_producto' producto.id %}" class="stretched-link"></a>
+
+                <div class="product-img-container bg-light rounded-top d-flex align-items-center justify-content-center" style="height: 190px; overflow: hidden;">
+                    {% if producto.imagen_url %}
+                        <img src="{{ producto.imagen_url }}" alt="{{ producto.nombre }}" style="width: 100%; height: 100%; object-fit: cover;">
+                    {% else %}
+                        <i class="bi bi-box-seam fs-1 text-muted"></i>
+                    {% endif %}
+                </div>
+
+                <div class="card-body d-flex flex-column text-center">
+                    <small class="text-muted mb-1">{{ producto.categoria }}</small>
+                    <h6 class="fw-bold text-dark">{{ producto.nombre }}</h6>
+
+                    <div class="my-2">
+                        {% if producto.stock > 5 %}
+                            <span class="badge bg-success">Stock: {{ producto.stock }}</span>
+                        {% elif producto.stock > 0 %}
+                            <span class="badge bg-warning text-dark">Últimas {{ producto.stock }} unidades</span>
+                        {% else %}
+                            <span class="badge bg-danger">Sin stock</span>
+                        {% endif %}
+                    </div>
+
+                    <h5 class="text-primary fw-bold mt-auto pt-2">${{ producto.precio|floatformat:0 }}</h5>
+
+                    {% if producto.stock > 0 %}
+                    <button class="btn btn-outline-dark mt-2 w-100 position-relative" style="z-index: 3;"
+                        onclick="event.preventDefault(); event.stopPropagation(); addToCart('prod{{ producto.id }}', '{{ producto.nombre|escapejs }}', {{ producto.precio|floatformat:0 }}, '{{ producto.imagen_url|default_if_none:''|escapejs }}', {{ producto.stock }})">
+                        Añadir al Carrito
+                    </button>
+                    {% else %}
+                    <button class="btn btn-secondary mt-2 w-100 position-relative" style="z-index: 3;" disabled>
+                        Sin stock
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <i class="bi bi-box-seam fs-1 text-muted"></i>
+            <h5 class="mt-3">No hay productos disponibles</h5>
+            <p class="text-muted">Agrega productos desde el panel de administración para que aparezcan aquí.</p>
+        </div>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function filterProducts(category) {
+    const items = document.querySelectorAll('.product-item');
+    items.forEach(item => {
+        const itemCategory = item.dataset.category;
+        item.style.display = (category === 'all' || itemCategory === category) ? '' : 'none';
+    });
+}
+</script>
+{% endblock %}

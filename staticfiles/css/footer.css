@@ -1,0 +1,13 @@
+.footer-link {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+}
+.footer-link:hover {
+    color: #ffffff;
+}
+footer .text {
+    color: rgba(255, 255, 255, 0.7);
+}
+footer .fw-bold {
+    color: #ffffff;
+}

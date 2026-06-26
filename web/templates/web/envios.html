@@ -1,0 +1,126 @@
+{% extends "web/base.html" %}
+
+{% load static %}
+
+{% block title %}Envíos - Nexo Digital{% endblock %}
+
+{% block content %}
+    <main class="container py-5">
+        <div class="p-5 mb-4 bg-light rounded-3 border">
+            <h1 class="fw-bold text-dark mb-2">Información de Envíos</h1>
+            <p class="mb-0 text-muted">Envío rápido, seguro y con seguimiento en todo Chile</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm p-4 mb-4">
+                    <h3 class="fw-bold text-dark mb-3 d-flex align-items-center">
+                        <i class="bi bi-box-seam text-primary me-2"></i>
+                        Costo de despacho
+                    </h3>
+                    <p class="mb-2">En Nexo Digital contamos con un sistema de envío estándar para todos los productos.</p>
+                    <div class="alert alert-info mt-3 mb-0">
+                        <strong>Costo fijo de despacho:</strong> $10.990 CLP
+                    </div>
+                    <p class="text-muted mb-0 mt-3">Este valor se aplica automáticamente en el checkout cuando seleccionas "Despacho a domicilio".</p>
+                </div>
+                <div class="card border-0 shadow-sm p-4 mb-4">
+                    <h3 class="fw-bold text-dark mb-3 d-flex align-items-center">
+                        <i class="bi bi-hourglass-split text-primary me-2"></i>
+                        Tiempos de entrega
+                    </h3>
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Región</th>
+                                    <th>Tiempo estimado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Región Metropolitana</td>
+                                    <td><span class="badge bg-success">24 a 48 horas</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Valparaíso, O'Higgins, Maule</td>
+                                    <td><span class="badge bg-info">48 a 72 horas</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Ñuble, Biobío, La Araucanía</td>
+                                    <td><span class="badge bg-warning">2 a 4 días</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Los Ríos, Los Lagos</td>
+                                    <td><span class="badge bg-warning">3 a 5 días</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Aysén, Magallanes</td>
+                                    <td><span class="badge bg-secondary">5 a 7 días</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <small class="text-muted d-block mt-3">*Todos los tiempos son en días hábiles desde que confirmamos tu compra.</small>
+                </div>
+                <div class="card border-0 shadow-sm p-4">
+                    <h3 class="fw-bold text-dark mb-3 d-flex align-items-center">
+                        <i class="bi bi-shop text-primary me-2"></i>
+                        Retiro en tienda
+                    </h3>
+                    <p>Puedes seleccionar <strong>"Retiro en tienda"</strong> durante el pago y obtener tus productos sin costo de envío.</p>
+                    <div class="bg-light p-3 rounded">
+                        <strong>Ubicación:</strong> Avenida Tusca, Capital<br>
+                        <strong>Horario:</strong> Lunes a Viernes: 9:00 - 18:00 hrs<br>
+                        <strong>Teléfono:</strong> 800 123 3211
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm p-4 bg-light">
+                    <h4 class="fw-bold text-dark mb-4 d-flex align-items-center">
+                        <i class="bi bi-question-circle text-primary me-2"></i>
+                        Preguntas frecuentes
+                    </h4>
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item border-0 mb-2">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    ¿Puedo cambiar la dirección?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Sí, siempre que no haya sido despachado. Contáctanos al 800 123 3211.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item border-0 mb-2">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    ¿Ofrecen envío gratis?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    No en este momento. Puedes usar la opción de retiro en tienda sin costo.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item border-0">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    ¿Cómo rastreo mi pedido?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Te enviaremos un número de seguimiento por email cuando despachemos tu pedido.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

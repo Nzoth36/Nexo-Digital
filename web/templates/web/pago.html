@@ -1,0 +1,108 @@
+{% extends "web/base.html" %}
+
+{% load static %}
+
+{% block title %}Pago - Nexo Digital{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/payment.css' %}">
+{% endblock %}
+
+{% block content %}
+    <main class="container py-5">
+        <div class="row g-4">
+            <div class="col-lg-7">
+                <div class="card payment-card shadow-sm p-4">
+                    <h3 class="fw-bold mb-4">
+                        <i class="bi bi-credit-card"></i>
+                        Información de Pago
+                    </h3>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Nombre</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Apellido</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">Correo Electrónico</label>
+                            <input type="email" class="form-control">
+                        </div>
+                        <div class="col-12" id="address-field">
+                            <label class="form-label fw-semibold">Dirección</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-12 mt-3">
+                            <label class="form-label fw-semibold mb-3">Método de entrega</label>
+                            <div class="d-flex flex-column gap-3">
+                                <div class="payment-method">
+                                    <input type="radio" checked name="delivery" value="delivery" onchange="CartManager.toggleDeliveryFields()">
+                                    <i class="bi bi-truck"></i>
+                                    Despacho a domicilio
+                                </div>
+                                <div class="payment-method">
+                                    <input type="radio" name="delivery" value="pickup" onchange="CartManager.toggleDeliveryFields()">
+                                    <i class="bi bi-shop"></i>
+                                    Retiro en tienda
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-4">
+                    <h5 class="fw-bold mb-3">Método de pago</h5>
+                    <div class="d-flex flex-column gap-3">
+                        <div class="payment-method">
+                            <input type="radio" checked name="payment" value="card" onchange="CartManager.togglePaymentFields()">
+                            <i class="bi bi-credit-card"></i>
+                            Tarjeta de Crédito / Débito
+                        </div>
+                        <div class="payment-method">
+                            <input type="radio" name="payment" value="paypal" onchange="CartManager.togglePaymentFields()">
+                            <i class="bi bi-paypal"></i>
+                            PayPal
+                        </div>
+                    </div>
+                    <hr class="my-4">
+                    <div id="card-fields">
+                        <h5 class="fw-bold mb-3">Datos de Tarjeta</h5>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Número de tarjeta</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Fecha de expiración</label>
+                                <input type="text" class="form-control" placeholder="MM/AA">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">CVV</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="card summary-card shadow-sm p-4">
+                    <h4 class="fw-bold mb-4">Resumen del Pedido</h4>
+                    <div id="checkout-items"></div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="text-muted">Despacho</span>
+                        <span id="shipping-price">Gratis</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between fs-4 fw-bold mb-4">
+                        <span>Total</span>
+                        <span class="text-primary">$<span id="checkout-total">0</span></span>
+                    </div>
+                    <button class="btn btn-primary w-100 py-3 fw-bold" onclick="CartManager.confirmPurchase()">
+                        <i class="bi bi-lock-fill"></i>
+                        Confirmar Compra
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

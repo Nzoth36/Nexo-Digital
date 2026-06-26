@@ -1,0 +1,117 @@
+{% extends "web/base.html" %}
+{% load static %}
+
+{% block title %}{{ producto.nombre }} - Nexo Digital{% endblock %}
+
+{% block content %}
+<main class="container py-5">
+    <div class="mb-4 small">
+        <a href="{% url 'web:productos' %}" class="text-dark text-decoration-none">Todos los productos</a>
+        <span class="mx-2">›</span>
+        <span class="text-muted">{{ producto.categoria }}</span>
+        <span class="mx-2">›</span>
+        <span class="fw-semibold">{{ producto.nombre }}</span>
+    </div>
+
+    <div class="row g-5">
+        <div class="col-lg-7">
+            <div class="bg-light rounded-3 d-flex align-items-center justify-content-center mb-4" style="height: 430px;">
+                {% if producto.imagen_url %}
+                    <img id="main-product-image" src="{{ producto.imagen_url }}" alt="{{ producto.nombre }}" class="img-fluid rounded" style="max-height: 100%; object-fit: contain;">
+                {% else %}
+                    <i class="bi bi-box-seam display-1 text-muted"></i>
+                {% endif %}
+            </div>
+
+            <hr>
+
+            <div class="accordion" id="productDetails">
+                <div class="accordion-item border-0 border-bottom">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button bg-white fw-bold fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#detalle">
+                            Detalles del producto
+                        </button>
+                    </h2>
+                    <div id="detalle" class="accordion-collapse collapse show">
+                        <div class="accordion-body text-muted">
+                            {{ producto.descripcion|default:"Este producto está orientado a empresas que requieren soluciones de red, conectividad e infraestructura tecnológica confiable." }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0 border-bottom">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed bg-white fw-bold fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#especificaciones">
+                            Especificaciones técnicas
+                        </button>
+                    </h2>
+                    <div id="especificaciones" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                            <table class="table table-sm">
+                                <tbody>
+                                    <tr><th>Categoría</th><td>{{ producto.categoria }}</td></tr>
+                                    <tr><th>Stock disponible</th><td>{{ producto.stock }} unidad(es)</td></tr>
+                                    <tr><th>Garantía</th><td>12 meses</td></tr>
+                                    <tr><th>Entrega</th><td>3 a 4 días hábiles</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="position-sticky" style="top: 100px;">
+                <div class="d-flex justify-content-between align-items-start">
+                    <h2 class="fw-bold text-dark">{{ producto.nombre }}</h2>
+                    <i class="bi bi-heart fs-4 text-muted"></i>
+                </div>
+
+                <p class="text-muted mb-3">{{ producto.descripcion|default:"Producto tecnológico para empresas." }}</p>
+
+                <div class="mb-2">
+                    <span class="fs-2 fw-bold text-dark">${{ producto.precio|floatformat:0 }}</span>
+                </div>
+
+                <p class="text-muted small mb-3">Precio referencial con impuestos incluidos</p>
+
+                <div class="mb-4">
+                    {% if producto.stock > 5 %}
+                        <span class="badge bg-success fs-6">Stock disponible: {{ producto.stock }}</span>
+                    {% elif producto.stock > 0 %}
+                        <span class="badge bg-warning text-dark fs-6">Últimas {{ producto.stock }} unidades</span>
+                    {% else %}
+                        <span class="badge bg-danger fs-6">Producto sin stock</span>
+                    {% endif %}
+                </div>
+
+                {% if producto.stock > 0 %}
+                <button class="btn btn-dark w-100 py-3 fw-bold mb-3"
+                        onclick="addToCart('prod{{ producto.id }}', '{{ producto.nombre|escapejs }}', {{ producto.precio|floatformat:0 }}, '{{ producto.imagen_url|default_if_none:''|escapejs }}', {{ producto.stock }})">
+                    <i class="bi bi-cart3 me-2"></i>
+                    AÑADIR AL CARRITO
+                </button>
+                {% else %}
+                <button class="btn btn-secondary w-100 py-3 fw-bold mb-3" disabled>
+                    <i class="bi bi-x-circle me-2"></i>
+                    SIN STOCK
+                </button>
+                {% endif %}
+
+                <div class="d-flex justify-content-between small text-muted mb-4">
+                    <span><i class="bi bi-circle-fill me-1" style="font-size: 0.5rem;"></i> Stock: {{ producto.stock }}</span>
+                    <span>Envío en 3-4 días</span>
+                </div>
+
+                <ul class="list-unstyled small text-muted">
+                    <li class="mb-2"><i class="bi bi-check-lg me-2"></i> Alta compatibilidad con redes empresariales</li>
+                    <li class="mb-2"><i class="bi bi-check-lg me-2"></i> Instalación sencilla</li>
+                    <li class="mb-2"><i class="bi bi-check-lg me-2"></i> Garantía incluida</li>
+                    <li class="mb-2"><i class="bi bi-check-lg me-2"></i> Soporte técnico disponible</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
